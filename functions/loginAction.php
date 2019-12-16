@@ -17,7 +17,7 @@ else if( !empty($pseudo) && empty($password)){
 
 if( !empty($pseudo) && !empty($password)){
     $req = $db->prepare("SELECT * FROM users WHERE pseudo = :pseudo AND password = :password");
-    $req->bindParam(":pseudo,$password")
+    $req->bindParam(":pseudo,$pseudo")
     $req->bindParam(":password,$password")
 
     $result = $req->fetch(PDO::FETCH_ASSOC);
