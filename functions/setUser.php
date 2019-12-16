@@ -14,34 +14,53 @@ try {
 var_dump($_POST);
 
 //Post
-$email = $_POST["emailUser"];
 $pseudo = $_POST["pseudo"];
 $password = $_POST["password"];
 $cf_password = $_POST["cf_password"];
 $nextpage = false;
 
-echo " | email: " . $email . " | pseudo: " . $pseudo . " | mot de passe: " . $password ;
+echo " | pseudo: " . $pseudo . " | mot de passe: " . $password ;
 
 // Avant d'insérer en base de données faire les vérifications suivantes
     // Vérifier si le pseudo ou le mot de passe est vide
-    if ( empty( $email ) || empty( $pseudo ) || empty( $password ) ) {
-        $nextpage = true;
+    $message = "";
+
+    if( empty($pseudo) && empty($password)){
+        $message = "Vous devez remplir les deux champs";
+        header("Location: ../register.php?message=$message");
     }
-    // Ajouter un input confirm password et vérifier si les deux sont égaux
-    if ( "$password" !== "$cf_password" ) {
-        $nextpage = true;
+    else if(empty($pseudo) && !empty($password)){
+        $message = "Vous devez remplir un pseudo";
+        header("Location: ../register.php?message=$message");
     }
-    //redirection en cas de champs vide ou incorrect
-    if ( "$nextpage" ) {
-        header("Location: ../register.php");
+    else if( !empty($pseudo) && empty($password)){
+        $message = "Vous devez remplir un password";
+        header("Location: ../register.php?message=$message");
     }
+
+    var_dump($message);
     
 
 // Ajouter un champ email: fait
 
 // Etape 3 : prepare request
-$req = $db->prepare("INSERT INTO users (emailUser, pseudo, password) VALUES(:emailUser, :pseudo, :password)");
-$req->bindParam(":emailUser", $email);
-$req->bindParam(":pseudo", $_POST["pseudo"]);
-$req->bindParam(":password", $_POST["password"]);
-$req->execute();
+if( !empty($password) && !empty($cf_password) && !empty($pseudo)){
+    if($password === $cf_password){
+        $req = $db->prepare("INSERT INTO users (emailUser, pseudo, password) VALUES(:emailUser, :pseudo, :password)");
+        $req->bindParam(":pseudo", $_POST["pseudo"]);
+        $req->bindParam(":password", $_POST["password"]);
+        $req->execute();
+        
+        $message = "Votre compte à bien été créé";
+        header("Location: ../login.php?message=$message");
+    }else{
+        $message = "Les deux mdp ne sont pas identiques";
+        header("Location: ../register.php?message=$message");
+    }
+}
+
+
+// Ajouter un input confirm password et vérifier si les deux sont égaux
+/*
+
+*/

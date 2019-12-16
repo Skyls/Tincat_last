@@ -43,4 +43,8 @@ h1 {
   text-align: center;
 }
 
+.message {
+  display: flex;
+}
+
 /*# sourceMappingURL=style.css.map */
