@@ -9,15 +9,17 @@
             <input type="password" name="cf_password" placeholder="confirm password">
             <input type="submit" value="register">
         </form>
-    </div>
+    
 
-    <div class="message">
-        <?php 
-            if(isset($_GET["message"])){
-                echo $_GET["message"];
-            }
-        ?>
-    </div>
+        <a href="login.php">Déjà un compte?</a>
 
+        <div class="message">
+            <?php 
+                if(isset($_GET["message"])){
+                    echo $_GET["message"];
+                }
+            ?>
+        </div>
+    </div>
 </body>
 </html>

@@ -8,15 +8,17 @@
             <input type="password" placeholder="password" name="password">
             <input type="submit" value="login">
         </form>
-    </div>
+    
 
-    <div class="message">
-        <?php 
-            if(isset($_GET["message"])){
-                echo $_GET["message"];
-            }
-        ?>
-    </div>
+        <a href="register.php">Pas encore de compte?</a>
 
+        <div class="message">
+            <?php 
+                if(isset($_GET["message"])){
+                    echo $_GET["message"];
+                }
+            ?>
+        </div>
+    </div>
 </body>
 </html>
